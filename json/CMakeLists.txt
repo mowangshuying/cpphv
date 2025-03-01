@@ -1,0 +1,17 @@
+if (CMAKE_HOST_WIN32)
+    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+endif()
+
+if (BUILD_SHARED)
+    add_library(json SHARED cJSON.h cJSON.c CJsonObject.hpp CJsonObject.cpp)
+else()
+    add_library(json_static STATIC cJSON.h cJSON.c CJsonObject.hpp CJsonObject.cpp)
+endif()
+
+if (BUILD_SHARED)
+    message(STATUS "build json shared library")
+    set(JSON_LIBRARIES json CACHE INTERNAL "link json libraries")
+else()
+    message(STATUS "build json static library")
+    set(JSON_LIBRARIES json_static CACHE INTERNAL "link json libraries")
+endif()
